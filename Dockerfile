@@ -23,5 +23,4 @@ RUN echo ". /uros_ws/install/setup.bash" >> ~/.bashrc
 # setup entrypoint
 COPY ./ros_entrypoint.sh /
 
-ENTRYPOINT ["/bin/sh", "/ros_entrypoint.sh"]
 CMD ["--help"]
