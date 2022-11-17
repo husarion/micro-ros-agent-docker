@@ -12,4 +12,4 @@ fi
 source "/opt/ros/$ROS_DISTRO/setup.bash"
 source "/uros_ws/install/local_setup.bash"
 
-exec "$@"
+exec ros2 run micro_ros_agent micro_ros_agent "$@"
