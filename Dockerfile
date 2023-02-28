@@ -1,4 +1,6 @@
 
+ARG PREFIX=
+
 FROM ros:humble AS micro-ros-builder
 
 WORKDIR /ros2_ws
@@ -24,14 +26,11 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh && \
     ros2 run micro_ros_setup build_agent.sh && \
     rm -rf log/ build/ src/
 
-FROM husarnet/ros:humble-ros-core
+FROM husarnet/ros:${PREFIX}${ROS_DISTRO}-ros-core
 
 SHELL ["/bin/bash", "-c"]
 
 COPY --from=micro-ros-builder /ros2_ws /ros2_ws
 COPY --from=micro-ros-builder /version.txt /version.txt 
-
-RUN echo ". /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
-RUN echo ". /ros2_ws/install/setup.bash" >> ~/.bashrc
 
 CMD ros2 run micro_ros_agent micro_ros_agent --help
