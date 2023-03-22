@@ -31,6 +31,7 @@ FROM husarnet/ros:${PREFIX}${ROS_DISTRO}-ros-core
 SHELL ["/bin/bash", "-c"]
 
 COPY --from=micro-ros-builder /ros2_ws /ros2_ws
-COPY --from=micro-ros-builder /version.txt /version.txt 
+COPY --from=micro-ros-builder /version.txt /version.txt
 
+COPY ros_entrypoint.sh /ros_entrypoint.sh
 CMD ros2 run micro_ros_agent micro_ros_agent --help
