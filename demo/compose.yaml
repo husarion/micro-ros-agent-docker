@@ -1,0 +1,17 @@
+services:
+
+  microros:
+    build:
+      context: ..
+    devices:
+      - ${SERIAL_PORT:?err}
+    environment:
+      - ROS_DOMAIN_ID=2
+    command: ros2 run micro_ros_agent micro_ros_agent serial -D $SERIAL_PORT serial -b 576000 # -v6
+
+  rosbot:
+    image: husarion/rosbot:humble-0.6.1-20230712 # contains the 0.7.0 firmware version (with dynami IP)
+    # image: husarion/rosbot:humble-0.6.1-20230607-stable # contains the last version of the firmware without dynamic IP change (v0.3.4)
+    environment:
+      - ROS_DOMAIN_ID=2
+    command: ros2 launch rosbot_bringup bringup.launch.py
