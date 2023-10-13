@@ -14,6 +14,16 @@ if [ -z "$XRCE_DOMAIN_ID_OVERRIDE" ]; then
     fi
 fi
 
+if [[ "$ROS_LOCALHOST_ONLY" == "1" ]]; then
+    # microros agent doesn't work with ROS_LOCALHOST_ONLY and RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+    if [[ -z "$FASTRTPS_DEFAULT_PROFILES_FILE" ]]; then
+        echo "running ROS_LOCALHOST_ONLY setup"
+        # Set the FASTRTPS_DEFAULT_PROFILES_FILE environment variable
+        export FASTRTPS_DEFAULT_PROFILES_FILE=/microros_locahost_only.xml
+    fi
+fi
+
 # setup ros environment
 source "/opt/ros/$ROS_DISTRO/setup.bash"
 test -f "/ros2_ws/install/setup.bash" && source "/ros2_ws/install/setup.bash"
