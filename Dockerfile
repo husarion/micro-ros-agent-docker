@@ -1,7 +1,7 @@
 ARG ROS_DISTRO=humble
 ARG PREFIX=
 
-FROM ros:humble AS micro-ros-builder
+FROM ros:${ROS_DISTRO} AS micro-ros-builder
 
 WORKDIR /ros2_ws
 
