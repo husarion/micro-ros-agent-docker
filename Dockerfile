@@ -33,9 +33,9 @@ SHELL ["/bin/bash", "-c"]
 COPY --from=micro-ros-builder /ros2_ws /ros2_ws
 COPY --from=micro-ros-builder /version.txt /version.txt 
 COPY microros_locahost_only.xml /
-COPY ./ros_domain_id.sh /
+COPY ./entrypoint_additions.sh /
 
-RUN sed -i "/# <additional-user-commands>/r /ros_domain_id.sh" /*_entrypoint.sh && \
+RUN sed -i "/# <additional-user-commands>/r /entrypoint_additions.sh" /*_entrypoint.sh && \
     sed -i "/# <additional-user-commands>/d" /*_entrypoint.sh
 
 CMD ros2 run micro_ros_agent micro_ros_agent --help
