@@ -5,7 +5,7 @@ FROM ros:${ROS_DISTRO} AS micro-ros-builder
 
 WORKDIR /ros2_ws
 
-RUN git clone --depth 1 -b humble https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup && \
+RUN git clone --depth 1 -b ${ROS_DISTRO} https://github.com/micro-ROS/micro_ros_setup.git src/micro_ros_setup && \
     . /opt/ros/$ROS_DISTRO/setup.sh && \
     apt update && \
     apt install -y ed python3-pip && \
@@ -31,7 +31,7 @@ FROM husarnet/ros:${PREFIX}${ROS_DISTRO}-ros-core
 SHELL ["/bin/bash", "-c"]
 
 COPY --from=micro-ros-builder /ros2_ws /ros2_ws
-COPY --from=micro-ros-builder /version.txt /version.txt 
+COPY --from=micro-ros-builder /version.txt /version.txt
 COPY microros_locahost_only.xml /
 COPY ./entrypoint_additions.sh /
 
